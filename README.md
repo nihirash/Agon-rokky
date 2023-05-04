@@ -2,7 +2,7 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D6JVS74)
 
-[screenshot](screenshot.jpg)
+![screenshot](screenshot.jpg)
 
 ## Playing game
 
