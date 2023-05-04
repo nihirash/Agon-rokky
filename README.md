@@ -20,7 +20,9 @@ Levels was created in CharPad tool(use 32x23 size and `chars.raw` font - include
 
 ## Known issues
 
-Rarely(really) cursor key can "locks". Press this direction again and it will be fixed - it happens cause I'm reading OS var for scan codes and even button pressed and button released. I didn't found another way make controls so responsive without using external devices(like joystick).
+Rarely(really) cursor key can be "locked". Press this direction again and it will be fixed - it happens cause I'm reading OS var for scan codes and even button pressed and button released and it can happens if I lost one even. 
+
+I didn't found another way make controls so responsive without using external devices(like joystick).
 
 ## Licensing
 
