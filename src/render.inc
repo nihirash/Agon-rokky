@@ -3,37 +3,6 @@ level_buffer:
 	incbin "levels/level9"
 end_level_buffer:
 
-push_select:
-	ld (@tile), a
-	ld hl, @cmd
-	ld bc, 4
-	rst.lil $18
-	ret
-@cmd:
-	db 23, 27, 0
-@tile:	db 0
-
-push_draw:
-	ld a, c
-	ld (@x), a
-	ld a, b
-	ld (@x+1), a
-
-	ld a, l
-	ld (@y), a
-	ld a, h
-	ld (@y+1), a
-	ld hl, @cmd
-	ld bc, @end-@cmd
-	rst.lil $18
-	ret
-@cmd:
-	db 23, 27, 3
-@x:	dw 0
-@y:	dw 0
-@end:
-
-
 
 tile_table:
 	db 00, BMP_NOTHING
@@ -104,8 +73,6 @@ find_replacement:
 active_table: dl tile_table
 sprite_state: db 0
 
-last_tile: db $ff
-
 swap_tiles:
 	ld a, (sprite_state)
 	ld hl, tile_table
@@ -119,71 +86,31 @@ swap_tiles:
 
 ;; Draws buffer to screen
 draw_buffer:
-	ld a,$ff
-	ld (last_tile), a
-
 	ld a, 12
 	call putc	
-	or a 
-	sbc hl, hl
-
-	ld (@x), hl
-	ld hl, 8
-	ld (@y), hl
 
 	ld hl, level_buffer
 	
 	ld b, 23
 @loop_r:
 	push bc
-	ld bc, 0
-	ld (@x), bc
-
 	ld b, 32
-	
 @loop_c:
 	push bc
 	push hl
 
 	ld a, (hl)
-	call find_replacement
-
-	ld hl, last_tile
-	cp (hl)
-	jr z, @skip
-	ld (hl), a
-	call push_select
-@skip:
-	ld bc, (@x)
-	ld hl, (@y)
-	call push_draw
-
-	ld hl, (@x)
-	ld bc, 16
-	add hl, bc
-	ld (@x),hl
-
+	call map_poke
 	pop hl
 	inc hl
-
 	pop bc
 	djnz @loop_c
-
 	push hl
-
-	ld hl, (@y)
-	ld bc, 16
-	add hl, bc
-	ld (@y), hl
-
 	pop hl
 
 	pop bc
 	djnz @loop_r
 	ret
-
-@x:	dl 0
-@y:	dl 16
 
 bang_anim:
 	ld hl, level_buffer
