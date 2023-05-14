@@ -89,13 +89,9 @@ draw_buffer:
 	ld a, 12
 	call putc	
 
-	ld hl, level_buffer
-	
-	ld b, 23
-@loop_r:
-	push bc
-	ld b, 32
-@loop_c:
+	ld hl, level_buffer	
+	ld bc, 736
+@loop:
 	push bc
 	push hl
 
@@ -104,12 +100,11 @@ draw_buffer:
 	pop hl
 	inc hl
 	pop bc
-	djnz @loop_c
-	push hl
-	pop hl
+	dec bc
+	ld a, b
+	or c
+	jr nz, @loop
 
-	pop bc
-	djnz @loop_r
 	ret
 
 bang_anim:
