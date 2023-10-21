@@ -16,7 +16,7 @@ sound:
 @cmd:
 	db 23, 0, $85
 @chan:  db 1
-	db 1, 127
+	db 0, 127
 @w_freq:
 	dw 0
 	dw 50

@@ -140,7 +140,7 @@ vdp_init:
 	rst.lil $18
 	ret
 @cmd:
-	db 22, 1 ;; Mode 1
+	db 22, 0 ;; Mode 0
 	db 23, 1, 0 ;; Hide cursor
 	db "Very important logs(we aren't joking here):", 13, 10
 	db "Video mode established", 13, 10
@@ -278,7 +278,7 @@ vdp_close:
 	rst.lil $18
 	ret
 @cmd:
-	db 22, 1
+	db 22, 0
 	db 17, 7, 17, $80
 	db 23, 1, 1
 	db 12
