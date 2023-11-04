@@ -6,16 +6,18 @@ sound:
 	ld (@w_freq+1), a
 
 	ld a, (@chan)
-	xor 3
+	xor 1
 	ld (@chan), a	
 
 	ld hl, @cmd
 	ld bc, @end-@cmd
+	di
 	rst.lil $18
+	ei
 	ret
 @cmd:
-	db 23, 0, $85
-@chan:  db 1
+	db 23, 0,$85
+@chan:  db 4
 	db 0, 127
 @w_freq:
 	dw 0
@@ -141,7 +143,9 @@ shake:
 
 do_scroll:
 	ld bc, 5
+	di
 	rst.lil $18
+	ei
 	ret
 
 

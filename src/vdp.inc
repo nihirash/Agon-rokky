@@ -1,10 +1,10 @@
 ;; All sprites 16x16. Prepares VDP routines and includes binary
 
 	macro DEFSPRITE arg, file
-	db 23, 27, 0
+	db 23,27,0
 	db arg
-	db 23, 27, 1
-	dw 16, 16
+	db 23,27,1
+	dw 16,16
 	incbin file
 	endmacro
 
@@ -164,6 +164,13 @@ vdp_init:
 	DEFSPRITE BMP_ENEMY1, "imgs/ghost1.rgba"
 	DEFSPRITE BMP_CRASH0, "imgs/bang0.rgba"
 	DEFSPRITE BMP_CRASH1, "imgs/bang1.rgba"
+
+	db "Reset additional audio channels", 13, 10
+	db 23, 0, $85, 4, 8
+	db 23, 0, $85, 5, 8
+	db 23, 0, $85, 4, 3, 00, 00
+	db 23, 0, $85, 5, 3, 00, 00
+
 	db 12
 @end:	
 
@@ -177,7 +184,9 @@ bmp_select:
 	ld (@bmp), a
 	ld hl, @cmd
 	ld bc, @end-@cmd
+	di
 	rst.lil $18
+	ei
 	ret
 @cmd:
 	db 23, 27, 0
@@ -213,7 +222,9 @@ bmp_draw:
 
 	ld hl, @cmd
 	ld bc, @end-@cmd
+	di
 	rst.lil $18
+	ei
 	ret
 @cmd:
 	db 23, 27, 3

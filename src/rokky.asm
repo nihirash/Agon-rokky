@@ -2,17 +2,19 @@ MAX_ARGS:	equ 1
 	include "crt.inc"
 	include "vdp.inc"
 	include "render.inc"
-	include "level.inc"
+ 	include "level.inc"
 	include "enemy.inc"
 	include "player.inc"
 	include "gravity.inc"
 	include "levels.inc"
 	include "fx.inc"
 	include "pages.inc"
+	include "music.inc"
 _main:
 	call vdp_init
 	call show_intro
 	call load_level
+	call track_init
 @loop:
 	call level_life
 	call player_process
@@ -33,6 +35,7 @@ exit:
 	call die_snd	
 	call slide_off
 	call vdp_close
+	call track_free
 	ld hl, bye
 	jp printZ
 bye:
