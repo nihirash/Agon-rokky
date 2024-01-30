@@ -29,7 +29,7 @@ check_next:
 	;; Check maximum level
 	ld (current_level), a
 	cp MAX_LEVEL
-	jp z, final
+	jp z, final_level
 	call win_snd
 	call slide_off
 
@@ -53,8 +53,11 @@ load_level:
 	call draw_buffer
 	call draw_ui
 	ret
-	
 
+final_level:
+        ld a, 0
+        ld (current_level), a
+        jp final
 
 level1:
 	incbin "levels/level1"
